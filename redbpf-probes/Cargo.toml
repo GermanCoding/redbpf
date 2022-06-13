@@ -16,9 +16,9 @@ redbpf-macros = { version = "2.3.0", path = "../redbpf-macros" }
 ufmt = { version = "0.1.0", default-features = false }
 
 [build-dependencies]
-cargo-bpf = { version = "2.3.0", path = "../cargo-bpf", default-features = false, features = ["bindings"] }
-bpf-sys = { version = "2.3.0", path = "../bpf-sys" }
-libbpf-sys = { path = "../../libbpf-sys" }
+cargo-bpf = { path = "../cargo-bpf", default-features = false, features = ["bindings"] }
+bpf-sys = { path = "../bpf-sys" }
+libbpf-sys = { git = "https://github.com/GermanCoding/libbpf-sys-musl.git" }
 syn = {version = "1.0", default-features = false, features = ["parsing", "visit"] }
 quote = "1.0"
 glob = "0.3.0"

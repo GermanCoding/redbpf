@@ -16,7 +16,7 @@ maintenance = { status = "actively-developed" }
 
 [dependencies]
 bpf-sys = { path = "../bpf-sys" }
-libbpf-sys = { path = "../../libbpf-sys" }
+libbpf-sys = { git = "https://github.com/GermanCoding/libbpf-sys-musl.git" }
 goblin = "0.4"
 zero = "0.1"
 libc = "0.2"
