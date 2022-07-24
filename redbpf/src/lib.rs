@@ -748,7 +748,7 @@ impl Drop for ProgramData {
     }
 }
 
-fn pin_bpf_obj(fd: RawFd, file: impl AsRef<Path>) -> Result<()> {
+pub fn pin_bpf_obj(fd: RawFd, file: impl AsRef<Path>) -> Result<()> {
     let mut file: PathBuf = PathBuf::from(file.as_ref());
     if file.exists() {
         error!("pinned path already exists: {:?}", file);
@@ -792,7 +792,7 @@ fn pin_bpf_obj(fd: RawFd, file: impl AsRef<Path>) -> Result<()> {
     }
 }
 
-fn unpin_bpf_obj(file: impl AsRef<Path>) -> Result<()> {
+pub fn unpin_bpf_obj(file: impl AsRef<Path>) -> Result<()> {
     let _ = fs::remove_file(file)?;
     Ok(())
 }
@@ -1185,7 +1185,7 @@ unsafe fn open_raw_sock(name: &str) -> Result<RawFd> {
     Ok(sock)
 }
 
-fn if_nametoindex(dev_name: &str) -> Result<u32> {
+pub fn if_nametoindex(dev_name: &str) -> Result<u32> {
     let ciface = CString::new(dev_name).unwrap();
     let ifindex = unsafe { libc::if_nametoindex(ciface.as_ptr()) };
     if ifindex == 0 {
@@ -1194,14 +1194,14 @@ fn if_nametoindex(dev_name: &str) -> Result<u32> {
     Ok(ifindex)
 }
 
-unsafe fn attach_xdp(ifindex: u32, progfd: libc::c_int, flags: libc::c_uint) -> Result<()> {
+pub unsafe fn attach_xdp(ifindex: u32, progfd: libc::c_int, flags: libc::c_uint) -> Result<()> {
     if libbpf_sys::bpf_set_link_xdp_fd(ifindex as i32, progfd, flags) != 0 {
         return Err(Error::IO(io::Error::last_os_error()));
     }
     Ok(())
 }
 
-unsafe fn detach_xdp(ifindex: u32) -> Result<()> {
+pub unsafe fn detach_xdp(ifindex: u32) -> Result<()> {
     attach_xdp(ifindex, -1, 0)
 }
 
