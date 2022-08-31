@@ -133,6 +133,17 @@ impl<T> RingBufMap<T> {
             }
         }
     }
+
+    /// Wrapper for bpf_ringbuf_query
+    #[inline]
+    pub fn query(&mut self, flags: u64) -> u64 {
+        unsafe {
+            bpf_ringbuf_query(
+                &mut self.def as *mut _ as *mut c_void,
+                flags,
+            ) as u64
+        }
+    }
 }
 
 impl<T> BpfMap for RingBufMap<T> {
